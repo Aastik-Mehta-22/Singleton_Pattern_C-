@@ -19,10 +19,14 @@ mutex Logger::mtx;
 
 Logger* Logger::getLogger()
 {
-    mtx.lock();
-    if(loggerinstance == nullptr){
-        loggerinstance = new Logger();
+    if(loggerinstance == nullptr)
+    {
+        mtx.lock();
+        if(loggerinstance == nullptr){
+            loggerinstance = new Logger();
+        }
+        mtx.unlock();
     }
-    mtx.unlock();
+
     return loggerinstance;
 }
