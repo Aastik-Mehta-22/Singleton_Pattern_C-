@@ -15,12 +15,14 @@ void Logger::Log(string msg)
 
 int Logger::cntr = 0;
 Logger* Logger::loggerinstance = nullptr;
+mutex Logger::mtx;
 
 Logger* Logger::getLogger()
 {
+    mtx.lock();
     if(loggerinstance == nullptr){
         loggerinstance = new Logger();
     }
-    
+    mtx.unlock();
     return loggerinstance;
 }
